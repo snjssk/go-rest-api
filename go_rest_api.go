@@ -2,9 +2,17 @@
 package main
 
 import (
-	"log"
+	"fmt"
+	"github.com/gorilla/mux"
 	"net/http"
+
+	"github.com/snjssk/go-rest-api/config"
 )
+
+func itemHandler(w http.ResponseWriter, r *http.Request){
+	title := r.URL.Path
+	fmt.Fprintf(w, "<h1>%s</h1>", title)
+}
 
 func main()  {
 	// データの取得
@@ -19,8 +27,15 @@ func main()  {
 	//reference, _ := url.Parse("/test?a=b")
 	//endpoint := base.ResolveReference(reference)
 	//fmt.Println(endpoint)
+	fmt.Printf("%T %v\n", config.Config.Port, config.Config.Port)
+
+	// http.ListenAndServeの前に登録してあげる
+	// /item
+	// http.HandleFunc("/item", itemHandler)
 
 	// エラーが返ってくるため、log.Fatal()を利用する
-	log.Fatal(http.ListenAndServe(":18080", nil))
+	// log.Fatal(http.ListenAndServe(":18080", nil))
 
+
+	router := mux.NewRouter()
 }
