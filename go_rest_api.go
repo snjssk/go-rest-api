@@ -3,15 +3,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
 	"net/http"
 
 	"github.com/snjssk/go-rest-api/config"
 )
 
-func itemHandler(w http.ResponseWriter, r *http.Request){
-	title := r.URL.Path
-	fmt.Fprintf(w, "<h1>%s</h1>", title)
+func getItems(w http.ResponseWriter, r *http.Request){
+	//title := r.URL.Path
+	//fmt.Fprintf(w, "<h1>%s</h1>", title)
+	// json.NewEncoder(w).Encode(models.GetItem)
 }
 
 func main()  {
@@ -36,6 +36,10 @@ func main()  {
 	// エラーが返ってくるため、log.Fatal()を利用する
 	// log.Fatal(http.ListenAndServe(":18080", nil))
 
-
-	router := mux.NewRouter()
+	// router
+	//router := mux.NewRouter()
+	//router.HandleFunc("/items", getItems).Methods("GET")
+	//
+	//log.Println("Listen Server ....")
+	//log.Fatal(http.ListenAndServe(":18080", router))
 }

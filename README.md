@@ -5,5 +5,8 @@ REST APIを実装するサンプル。
 
 ## module
 
+- mux
+- https://github.com/gorilla/mux
+
+- ini
 - https://github.com/go-ini/ini
-- go get gopkg.in/ini.v1
