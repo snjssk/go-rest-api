@@ -2,7 +2,11 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
+	"github.com/snjssk/go-rest-api/app/models"
+	"log"
 	"net/http"
 
 	"github.com/snjssk/go-rest-api/config"
@@ -10,8 +14,19 @@ import (
 
 func getItems(w http.ResponseWriter, r *http.Request){
 	//title := r.URL.Path
-	//fmt.Fprintf(w, "<h1>%s</h1>", title)
-	// json.NewEncoder(w).Encode(models.GetItem)
+	// fmt.Fprintf(w, "<h1>%s</h1>", title)
+	//fmt.Println(models.GetItem)
+	//json.NewEncoder(w).Encode(models.GetItem)
+
+	//params := mux.Vars(r)
+	//log.Println(params) // map[id:1]
+
+	vars := mux.Vars(r)
+	id := vars["id"]
+	log.Println(id)
+
+	item := models.GetItem(id)
+	json.NewEncoder(w).Encode(item)
 }
 
 func main()  {
@@ -37,9 +52,10 @@ func main()  {
 	// log.Fatal(http.ListenAndServe(":18080", nil))
 
 	// router
-	//router := mux.NewRouter()
-	//router.HandleFunc("/items", getItems).Methods("GET")
-	//
-	//log.Println("Listen Server ....")
-	//log.Fatal(http.ListenAndServe(":18080", router))
+	router := mux.NewRouter()
+	router.HandleFunc("/items", getItems).Methods("GET")
+	router.HandleFunc("/items/{id}", getItems).Methods("GET")
+
+	log.Println("Listen Server ....")
+	log.Fatal(http.ListenAndServe(":18080", router))
 }

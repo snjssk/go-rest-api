@@ -2,7 +2,6 @@ package models
 
 import (
 	"database/sql"
-	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 )
@@ -11,8 +10,10 @@ import (
 var DbConnection *sql.DB
 
 func init() {
-	DbConnection, _ := sql.Open("sqlite3", "./example.sql")
-	defer DbConnection.Close()
+	// DbConnectionにSQL Openした結果を代入
+	var err error
+	DbConnection, err = sql.Open("sqlite3", "./example.sql")
+	// defer DbConnection.Close()
 
 	// create
 	cmd := `CREATE TABLE IF NOT EXISTS items(
@@ -20,7 +21,7 @@ func init() {
 				name STRING,
 				price INT
 			)`
-	_, err := DbConnection.Exec(cmd)
+	_, err = DbConnection.Exec(cmd)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -40,20 +41,19 @@ func init() {
 	//}
 
 	// multi select
-	cmd = `SELECT * FROM items`
-	rows, _ := DbConnection.Query(cmd)
-	defer rows.Close()
-	var items []Items
-	for rows.Next() {
-		var i Items
-		err := rows.Scan(&i.Id, &i.Name, &i.Price)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		items = append(items, i)
-	}
-	for _, i := range items {
-		fmt.Println(i.Id, i.Name, i.Price)
-	}
-
+	//cmd = `SELECT * FROM items`
+	//rows, _ := DbConnection.Query(cmd)
+	//defer rows.Close()
+	//var items []Items
+	//for rows.Next() {
+	//	var i Items
+	//	err := rows.Scan(&i.Id, &i.Name, &i.Price)
+	//	if err != nil {
+	//		log.Fatalln(err)
+	//	}
+	//	items = append(items, i)
+	//}
+	//for _, i := range items {
+	//	fmt.Println(i.Id, i.Name, i.Price)
+	//}
 }
